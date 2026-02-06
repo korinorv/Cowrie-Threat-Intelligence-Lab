@@ -15,7 +15,7 @@ This project involved deploying an intentionally vulnerable SSH service to the F
 - **Target Host:** Linux VM (jinguban)
 
 ## Deep Dive: Post-Exploitation Lifecycle
-All 247 successful authentications followed a remarkably consistent three-phase sequence, completing in under 60 seconds:
+All successful authentications followed a remarkably consistent three-phase sequence, completing in under 60 seconds:
 
 ### Phase 1: Reconnaissance (5-15s)
 Attackers verify system architecture to ensure compatibility with botnet payloads.
